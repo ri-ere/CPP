@@ -17,19 +17,19 @@ class linkedList {
 private:
 	struct Node *head = NULL;
 	struct Node *tail = NULL;
-	//struct Node *cur = NULL;
-	int size = 0;
+	struct Node *cur = NULL;
+	int size;
 public:
-	linkedList() {}
+	linkedList() {size = 0;}
 	~linkedList() {}
 	void addNode(int data);
 	void addHead(int data);
 	void addTail(int data);
+	bool searchData(int data);
 	void deleteHead();
 	void deleteTail();
-	void deleteNode(int data);//특정숫자 삭제? 
+	void deleteCur();//서치된 노드 삭제
 	void show();
-	bool searchData(int data);
 };
 
 void linkedList::addNode(int data) {
@@ -63,6 +63,15 @@ void linkedList::addTail(int data) {
 	}
 	++size;
 }
+bool linkedList::searchData(int data) {
+	this->cur = this->head;
+	do{
+		if(data == cur->data) return true;
+		else continue;
+} while(NULL != cur->next);
+	return false;
+}
+
 void linkedList::deleteHead() {
 	if(0==this->size){
 		cout<<"no Node";
@@ -82,17 +91,21 @@ void linkedList::deleteTail() {
 	else{
 		struct Node *tmp = new Node();
 		tmp = tail;
-		this->tail = 
+	//	this->tail = 
 		--size;	
 	}	
 }
+void linkedList::deleteCur(){
+	
+}
 void linkedList::show() {
-
+	this->cur = this->head;
+	do {
+		cout<<cur->data<<" ";
+		cur= cur->next;
+	}while(NULL != cur->next);
+	cout<<endl;
 }
-bool linkedList::searchData(int data) {
-	return true;
-}
-
 
 
 
@@ -102,10 +115,21 @@ int main(){
 	list.addHead(3);
 	list.addHead(2);
 	list.addHead(1);
-	list.addTail(4);
+	list.show();
+
 	list.addTail(4);
 	list.addTail(5);
 	list.addTail(6);
+	list.show();
 
+	list.deleteHead();
+	list.deleteTail();
+	list.show();
+
+	list.searchData(4);
+	list.deleteCur();
+	list.show();
 	for(;;){}
+
+	return 0;
 }
